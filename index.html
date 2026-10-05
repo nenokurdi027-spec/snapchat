@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A R V A N — Snapchat Video Downloader</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Tahoma, Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #241111 0%, transparent 35%),
+                linear-gradient(135deg, #070707, #111111 50%, #090909);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: clamp(42px, 12vw, 82px);
+            letter-spacing: 14px;
+            color: #ff3030;
+            text-shadow:
+                0 0 10px rgba(255, 48, 48, .5),
+                0 0 35px rgba(255, 48, 48, .25);
+            font-weight: 900;
+        }
+
+        .logo p {
+            margin-top: 8px;
+            color: #aaa;
+            font-size: 14px;
+            letter-spacing: 3px;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, .92);
+            border: 1px solid #303030;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.5),
+                0 0 30px rgba(255,0,0,.05);
+            backdrop-filter: blur(15px);
+        }
+
+        .icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            background: linear-gradient(145deg, #ff3030, #9e1111);
+            box-shadow: 0 10px 30px rgba(255,0,0,.25);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #999;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 58px;
+            background: #0c0c0c;
+            border: 1px solid #333;
+            border-radius: 15px;
+            color: white;
+            padding: 0 20px;
+            font-size: 15px;
+            outline: none;
+            direction: ltr;
+            transition: .25s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff3030;
+            box-shadow: 0 0 0 3px rgba(255,48,48,.1);
+        }
+
+        .input-group input::placeholder {
+            color: #666;
+        }
+
+        .download-btn {
+            width: 100%;
+            height: 58px;
+            border: 0;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ff3030, #c51616);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s;
+            box-shadow: 0 10px 25px rgba(255,0,0,.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(255,0,0,.3);
+        }
+
+        .download-btn:active {
+            transform: scale(.98);
+        }
+
+        .download-btn.loading {
+            opacity: .7;
+            cursor: wait;
+        }
+
+        .status {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 14px;
+            background: #111;
+            border: 1px solid #292929;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .loader {
+            width: 25px;
+            height: 25px;
+            border: 3px solid #333;
+            border-top-color: #ff3030;
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .feature {
+            background: #101010;
+            border: 1px solid #262626;
+            border-radius: 15px;
+            padding: 16px 8px;
+            text-align: center;
+        }
+
+        .feature .emoji {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature span {
+            display: block;
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        .notice {
+            margin-top: 22px;
+            padding: 13px;
+            background: rgba(255, 193, 7, .06);
+            border: 1px solid rgba(255,193,7,.15);
+            border-radius: 12px;
+            color: #999;
+            font-size: 11px;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #555;
+            font-size: 12px;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 22px 16px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .logo h1 {
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <h1>A R V A N</h1>
+        <p>SNAPCHAT VIDEO DOWNLOADER</p>
+    </div>
+
+    <div class="card">
+
+        <div class="icon">▶</div>
+
+        <h2>دابەزاندنی ڤیدیۆی Snapchat</h2>
+
+        <p class="description">
+            لینکی ڤیدیۆکە لێرە دابنێ و بۆ دابەزاندنی
+            ناوەڕۆکی ڕێگەپێدراو بەکاربهێنە.
+        </p>
+
+        <div class="input-group">
+            <input
+                id="videoUrl"
+                type="url"
+                placeholder="https://www.snapchat.com/..."
+                autocomplete="off"
+            >
+        </div>
+
+        <button class="download-btn" id="downloadBtn">
+            ⬇️ دابەزاندنی ڤیدیۆ
+        </button>
+
+        <div class="status" id="status">
+            <div class="loader"></div>
+            <div id="statusText">لە پشکنینیدایە...</div>
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <div class="emoji">⚡</div>
+                <span>خێرا</span>
+            </div>
+
+            <div class="feature">
+                <div class="emoji">🎬</div>
+                <span>کوالێتی باش</span>
+            </div>
+
+            <div class="feature">
+                <div class="emoji">📱</div>
+                <span>Mobile Friendly</span>
+            </div>
+
+        </div>
+
+        <div class="notice">
+            ⚠️ تەنها ڤیدیۆ و ناوەڕۆکی خۆت یان ئەو ناوەڕۆکانە دابەزێنە
+            کە مافی دابەزاندن و بەکارهێنانیان هەیە.
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 A R V A N — All Rights Reserved
+    </footer>
+
+</div>
+
+<script>
+    const input = document.getElementById("videoUrl");
+    const button = document.getElementById("downloadBtn");
+    const status = document.getElementById("status");
+    const statusText = document.getElementById("statusText");
+
+    button.addEventListener("click", async () => {
+
+        const url = input.value.trim();
+
+        if (!url) {
+            showStatus("تکایە لینکی ڤیدیۆکە دابنێ.");
+            return;
+        }
+
+        try {
+            new URL(url);
+        } catch {
+            showStatus("لینکەکە دروست نییە.");
+            return;
+        }
+
+        button.classList.add("loading");
+        button.disabled = true;
+
+        status.style.display = "block";
+        statusText.textContent = "لە پشکنینی لینکەکەدایە...";
+
+        /*
+         * لێرە backend/API ـی خۆت پەیوەست دەکەیت.
+         *
+         * نموونە:
+         *
+         * const response = await fetch("/api/download", {
+         *     method: "POST",
+         *     headers: {
+         *         "Content-Type": "application/json"
+         *     },
+         *     body: JSON.stringify({ url })
+         * });
+         *
+         * const data = await response.json();
+         *
+         * if (data.download_url) {
+         *     window.location.href = data.download_url;
+         * }
+         */
+
+        setTimeout(() => {
+            statusText.textContent =
+                "ئەم index.html ـە frontend ـە. بۆ دابەزاندنی ڕاستەقینە، backend/API ـی ڕێگەپێدراو پێویستە.";
+
+            button.classList.remove("loading");
+            button.disabled = false;
+        }, 1200);
+    });
+
+    function showStatus(message) {
+        status.style.display = "block";
+        statusText.textContent = message;
+    }
+
+    input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            button.click();
+        }
+    });
+</script>
+
+</body>
+</html>
