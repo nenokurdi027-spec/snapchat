@@ -3,67 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>A R V A N — Snapchat Video Downloader</title>
-
+    <title>A R V A N — Video Downloader</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             min-height: 100vh;
             font-family: Tahoma, Arial, sans-serif;
             background:
-                radial-gradient(circle at top, #241111 0%, transparent 35%),
-                linear-gradient(135deg, #070707, #111111 50%, #090909);
+                radial-gradient(
+                    circle at top,
+                    rgba(180, 20, 20, .18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #050505,
+                    #101010 50%,
+                    #070707
+                );
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 25px;
+            padding: 20px;
         }
-
         .container {
             width: 100%;
-            max-width: 650px;
+            max-width: 680px;
         }
-
+        /* LOGO */
         .logo {
             text-align: center;
             margin-bottom: 30px;
         }
-
         .logo h1 {
-            font-size: clamp(42px, 12vw, 82px);
-            letter-spacing: 14px;
-            color: #ff3030;
-            text-shadow:
-                0 0 10px rgba(255, 48, 48, .5),
-                0 0 35px rgba(255, 48, 48, .25);
+            font-size: clamp(42px, 12vw, 80px);
+            letter-spacing: 12px;
             font-weight: 900;
+            color: #ef3030;
+            text-shadow:
+                0 0 10px rgba(239, 48, 48, .6),
+                0 0 35px rgba(239, 48, 48, .25);
         }
-
         .logo p {
             margin-top: 8px;
-            color: #aaa;
-            font-size: 14px;
-            letter-spacing: 3px;
+            color: #777;
+            font-size: 13px;
+            letter-spacing: 4px;
         }
-
+        /* CARD */
         .card {
-            background: rgba(20, 20, 20, .92);
+            background: rgba(20, 20, 20, .94);
             border: 1px solid #303030;
-            border-radius: 24px;
+            border-radius: 25px;
             padding: 30px;
             box-shadow:
-                0 20px 60px rgba(0,0,0,.5),
-                0 0 30px rgba(255,0,0,.05);
-            backdrop-filter: blur(15px);
+                0 25px 70px rgba(0,0,0,.55),
+                0 0 35px rgba(255,0,0,.04);
         }
-
+        /* ICON */
         .icon {
             width: 75px;
             height: 75px;
@@ -72,310 +74,393 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 38px;
-            background: linear-gradient(145deg, #ff3030, #9e1111);
-            box-shadow: 0 10px 30px rgba(255,0,0,.25);
+            font-size: 34px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff3b3b,
+                    #9d1111
+                );
+            box-shadow:
+                0 12px 35px rgba(255,0,0,.22);
         }
-
         h2 {
             text-align: center;
             font-size: 25px;
             margin-bottom: 10px;
         }
-
         .description {
             text-align: center;
             color: #999;
             line-height: 1.9;
             margin-bottom: 25px;
         }
-
+        /* INPUT */
         .input-group {
-            position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
-
         .input-group input {
             width: 100%;
             height: 58px;
-            background: #0c0c0c;
+            background: #0b0b0b;
             border: 1px solid #333;
             border-radius: 15px;
-            color: white;
-            padding: 0 20px;
+            color: #fff;
+            padding: 0 18px;
             font-size: 15px;
             outline: none;
             direction: ltr;
             transition: .25s;
         }
-
         .input-group input:focus {
-            border-color: #ff3030;
-            box-shadow: 0 0 0 3px rgba(255,48,48,.1);
+            border-color: #ef3030;
+            box-shadow:
+                0 0 0 3px rgba(239,48,48,.10);
         }
-
         .input-group input::placeholder {
-            color: #666;
+            color: #555;
         }
-
+        /* BUTTON */
         .download-btn {
             width: 100%;
             height: 58px;
-            border: 0;
+            border: none;
             border-radius: 15px;
-            background: linear-gradient(135deg, #ff3030, #c51616);
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff3434,
+                    #c31616
+                );
             color: white;
             font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             transition: .25s;
-            box-shadow: 0 10px 25px rgba(255,0,0,.2);
+            box-shadow:
+                0 10px 30px rgba(255,0,0,.18);
         }
-
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(255,0,0,.3);
+            box-shadow:
+                0 15px 35px rgba(255,0,0,.30);
         }
-
         .download-btn:active {
             transform: scale(.98);
         }
-
-        .download-btn.loading {
-            opacity: .7;
+        .download-btn:disabled {
+            opacity: .55;
             cursor: wait;
         }
-
+        /* STATUS */
         .status {
             display: none;
             margin-top: 20px;
-            padding: 15px;
-            border-radius: 14px;
-            background: #111;
+            padding: 18px;
+            border-radius: 15px;
+            background: #0c0c0c;
             border: 1px solid #292929;
             color: #aaa;
             text-align: center;
         }
-
         .loader {
             width: 25px;
             height: 25px;
             border: 3px solid #333;
-            border-top-color: #ff3030;
+            border-top-color: #ef3030;
             border-radius: 50%;
             animation: spin .8s linear infinite;
-            margin: 0 auto 10px;
+            margin:
+                0 auto 10px;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-
+        /* FEATURES */
         .features {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns:
+                repeat(3, 1fr);
             gap: 10px;
             margin-top: 25px;
         }
-
         .feature {
             background: #101010;
-            border: 1px solid #262626;
+            border: 1px solid #272727;
             border-radius: 15px;
             padding: 16px 8px;
             text-align: center;
         }
-
-        .feature .emoji {
+        .feature-icon {
             font-size: 24px;
             margin-bottom: 8px;
         }
-
         .feature span {
             display: block;
             color: #aaa;
             font-size: 12px;
         }
-
+        /* NOTICE */
         .notice {
             margin-top: 22px;
             padding: 13px;
-            background: rgba(255, 193, 7, .06);
-            border: 1px solid rgba(255,193,7,.15);
+            background:
+                rgba(255,193,7,.05);
+            border:
+                1px solid rgba(255,193,7,.15);
             border-radius: 12px;
             color: #999;
             font-size: 11px;
             line-height: 1.8;
             text-align: center;
         }
-
+        /* FOOTER */
         footer {
             text-align: center;
-            margin-top: 22px;
+            margin-top: 20px;
             color: #555;
             font-size: 12px;
         }
-
-        @media (max-width: 500px) {
+        /* MOBILE */
+        @media (max-width: 520px) {
             body {
-                padding: 15px;
+                padding: 14px;
             }
-
             .card {
                 padding: 22px 16px;
             }
-
             .features {
                 grid-template-columns: 1fr;
             }
-
             .logo h1 {
-                letter-spacing: 8px;
+                letter-spacing: 7px;
             }
         }
     </style>
 </head>
-
 <body>
-
 <div class="container">
-
+    <!-- LOGO -->
     <div class="logo">
         <h1>A R V A N</h1>
-        <p>SNAPCHAT VIDEO DOWNLOADER</p>
-    </div>
-
-    <div class="card">
-
-        <div class="icon">▶</div>
-
-        <h2>دابەزاندنی ڤیدیۆی Snapchat</h2>
-
-        <p class="description">
-            لینکی ڤیدیۆکە لێرە دابنێ و بۆ دابەزاندنی
-            ناوەڕۆکی ڕێگەپێدراو بەکاربهێنە.
+        <p>
+            VIDEO DOWNLOADER
         </p>
-
+    </div>
+    <!-- MAIN CARD -->
+    <div class="card">
+        <div class="icon">
+            ▶
+        </div>
+        <h2>
+            دابەزاندنی ڤیدیۆ
+        </h2>
+        <p class="description">
+            لینکی ڤیدیۆی گشتی دابنێ و
+            ناوەڕۆکی ڕێگەپێدراو دابەزێنە.
+        </p>
+        <!-- URL -->
         <div class="input-group">
             <input
                 id="videoUrl"
                 type="url"
-                placeholder="https://www.snapchat.com/..."
+                placeholder="https://..."
                 autocomplete="off"
             >
         </div>
-
-        <button class="download-btn" id="downloadBtn">
+        <!-- BUTTON -->
+        <button
+            class="download-btn"
+            id="downloadBtn"
+        >
             ⬇️ دابەزاندنی ڤیدیۆ
         </button>
-
-        <div class="status" id="status">
-            <div class="loader"></div>
-            <div id="statusText">لە پشکنینیدایە...</div>
+        <!-- STATUS -->
+        <div
+            class="status"
+            id="status"
+        >
+            <div
+                class="loader"
+                id="loader"
+            ></div>
+            <div id="statusText">
+                لە پشکنینیدایە...
+            </div>
         </div>
-
+        <!-- FEATURES -->
         <div class="features">
-
             <div class="feature">
-                <div class="emoji">⚡</div>
-                <span>خێرا</span>
+                <div class="feature-icon">
+                    ⚡
+                </div>
+                <span>
+                    خێرا
+                </span>
             </div>
-
             <div class="feature">
-                <div class="emoji">🎬</div>
-                <span>کوالێتی باش</span>
+                <div class="feature-icon">
+                    🎬
+                </div>
+                <span>
+                    کوالێتی باش
+                </span>
             </div>
-
             <div class="feature">
-                <div class="emoji">📱</div>
-                <span>Mobile Friendly</span>
+                <div class="feature-icon">
+                    📱
+                </div>
+                <span>
+                    Mobile Friendly
+                </span>
             </div>
-
         </div>
-
+        <!-- NOTICE -->
         <div class="notice">
-            ⚠️ تەنها ڤیدیۆ و ناوەڕۆکی خۆت یان ئەو ناوەڕۆکانە دابەزێنە
-            کە مافی دابەزاندن و بەکارهێنانیان هەیە.
+            ⚠️ تەنها ناوەڕۆکی خۆت یان ئەو
+            ناوەڕۆکانە دابەزێنە کە مافی
+            دابەزاندن و بەکارهێنانیان هەیە.
         </div>
-
     </div>
-
     <footer>
         © 2026 A R V A N — All Rights Reserved
     </footer>
-
 </div>
-
 <script>
-    const input = document.getElementById("videoUrl");
-    const button = document.getElementById("downloadBtn");
-    const status = document.getElementById("status");
-    const statusText = document.getElementById("statusText");
-
-    button.addEventListener("click", async () => {
-
-        const url = input.value.trim();
-
-        if (!url) {
-            showStatus("تکایە لینکی ڤیدیۆکە دابنێ.");
-            return;
-        }
-
-        try {
-            new URL(url);
-        } catch {
-            showStatus("لینکەکە دروست نییە.");
-            return;
-        }
-
-        button.classList.add("loading");
-        button.disabled = true;
-
-        status.style.display = "block";
-        statusText.textContent = "لە پشکنینی لینکەکەدایە...";
-
-        /*
-         * لێرە backend/API ـی خۆت پەیوەست دەکەیت.
-         *
-         * نموونە:
-         *
-         * const response = await fetch("/api/download", {
-         *     method: "POST",
-         *     headers: {
-         *         "Content-Type": "application/json"
-         *     },
-         *     body: JSON.stringify({ url })
-         * });
-         *
-         * const data = await response.json();
-         *
-         * if (data.download_url) {
-         *     window.location.href = data.download_url;
-         * }
-         */
-
-        setTimeout(() => {
-            statusText.textContent =
-                "ئەم index.html ـە frontend ـە. بۆ دابەزاندنی ڕاستەقینە، backend/API ـی ڕێگەپێدراو پێویستە.";
-
-            button.classList.remove("loading");
-            button.disabled = false;
-        }, 1200);
-    });
-
-    function showStatus(message) {
-        status.style.display = "block";
-        statusText.textContent = message;
+const input =
+    document.getElementById("videoUrl");
+const button =
+    document.getElementById("downloadBtn");
+const status =
+    document.getElementById("status");
+const statusText =
+    document.getElementById("statusText");
+const loader =
+    document.getElementById("loader");
+function showStatus(
+    message,
+    loading = false
+) {
+    status.style.display = "block";
+    statusText.textContent =
+        message;
+    loader.style.display =
+        loading ? "block" : "none";
+}
+async function downloadVideo() {
+    const url =
+        input.value.trim();
+    if (!url) {
+        showStatus(
+            "تکایە لینکی ڤیدیۆکە دابنێ."
+        );
+        return;
     }
-
-    input.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            button.click();
+    try {
+        new URL(url);
+    } catch {
+        showStatus(
+            "لینکەکە دروست نییە."
+        );
+        return;
+    }
+    button.disabled = true;
+    showStatus(
+        "لە ئامادەکردنی ڤیدیۆکەدایە...",
+        true
+    );
+    try {
+        const response =
+            await fetch(
+                "/api/download",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body: JSON.stringify({
+                        url: url
+                    })
+                }
+            );
+        const contentType =
+            response.headers
+                .get("content-type") || "";
+        if (!response.ok) {
+            let message =
+                "دابەزاندن سەرکەوتوو نەبوو.";
+            if (
+                contentType
+                    .includes("application/json")
+            ) {
+                const data =
+                    await response.json();
+                message =
+                    data.error || message;
+            } else {
+                const text =
+                    await response.text();
+                if (text)
+                    message = text;
+            }
+            throw new Error(message);
         }
-    });
+        const blob =
+            await response.blob();
+        let filename =
+            "arvan-video.mp4";
+        const disposition =
+            response.headers
+                .get("content-disposition");
+        if (disposition) {
+            const match =
+                disposition.match(
+                    /filename="?([^"]+)"?/i
+                );
+            if (match)
+                filename = match[1];
+        }
+        const objectUrl =
+            URL.createObjectURL(blob);
+        const link =
+            document.createElement("a");
+        link.href =
+            objectUrl;
+        link.download =
+            filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(
+            objectUrl
+        );
+        showStatus(
+            "✓ ڤیدیۆکە بە سەرکەوتوویی دابەزێنرا."
+        );
+    } catch (error) {
+        showStatus(
+            "هەڵە: " +
+            error.message
+        );
+    } finally {
+        button.disabled = false;
+    }
+}
+button.addEventListener(
+    "click",
+    downloadVideo
+);
+input.addEventListener(
+    "keydown",
+    function(event) {
+        if (event.key === "Enter") {
+            downloadVideo();
+        }
+    }
+);
 </script>
-
 </body>
 </html>
